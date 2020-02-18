@@ -2,26 +2,26 @@ import 'package:metodo_grafico/Funcion.dart';
 
 class Problema {
   Funcion funcionObjetivo;
-  int numRestricciones;
+  num numRestricciones;
   List<Funcion> funcionRestricciones;
-  List<double> soluciones;
+  List<num> soluciones;
 
   Problema({this.funcionObjetivo, this.funcionRestricciones,
             this.numRestricciones});
 
-  calcularRestricciones() { // Se iterará para despejar las restricciones
+  void calcularRestricciones() { // Se iterará para despejar las restricciones
 
   }
 
-  buscarSouciones() {
+  void buscarSouciones() {
 
   }
 
-  buscarSolucionMinima() {
+  void buscarSolucionMinima() {
 
   }
 
-  buscarSolucionMaxima() {
+  void buscarSolucionMaxima() {
 
   }
   
