@@ -1,4 +1,4 @@
-package metodografico.metodo_grafico
+package com.example.metodo_grafico
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
