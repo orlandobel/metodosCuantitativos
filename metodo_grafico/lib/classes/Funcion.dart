@@ -1,11 +1,20 @@
 class Funcion {
-  List<double> variables;
-  double solucion;
-  int numVariables;
+  List<num> _variables;
+  num _solucion;
+  int _numVariables;
 
-  Funcion({this.variables,this.solucion});
+  Funcion(String funcion) {
+    _obtenerVariables();
+  }
+
+  // Se obtendran las variables de la función y se almacenarán en la lista
+  void _obtenerVariables() {
+
+  }
 
   calcularSolucion() {
 
   }
+
+  get solucion => _solucion;
 }

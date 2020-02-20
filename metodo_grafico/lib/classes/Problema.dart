@@ -1,29 +1,28 @@
-import 'file:///C:/Users/alexi/AndroidStudioProjects/metodo_grafico/lib/classes/Funcion.dart';
+import 'package:metodo_grafico/classes/Funcion.dart';
 
 class Problema {
-  Funcion funcionObjetivo;
-  num numRestricciones;
-  List<Funcion> funcionRestricciones;
-  List<num> soluciones;
+  Funcion _funcionObjetivo;
+  num _numRestricciones;
+  List<Funcion> _restricciones; // Funciones originales de las restricciones
+  List<Funcion> _funcionRestricciones; // Funicones despejadas de las restricciones
+  List<List<num>> _coordenadas; // Soluciones en coordenadas de las restricciones
 
-  Problema({this.funcionObjetivo, this.funcionRestricciones,
-            this.numRestricciones});
+  Problema(Funcion fo, num res,List<Funcion> fr) {
+    _funcionObjetivo = fo;
+    _numRestricciones = res;
+    _restricciones = fr;
+  }
 
-  void calcularRestricciones() { // Se iterará para despejar las restricciones
+  // Se iterará para despejar las restricciones
+  void calcularRestricciones() {
 
   }
 
-  void buscarSouciones() {
+  // Para cada restricción busara los pares ordenados según las soluciones
+  void buscarCoordenadas() {
 
   }
 
-  void buscarSolucionMinima() {
-
-  }
-
-  void buscarSolucionMaxima() {
-
-  }
-  
+  get coordenadas => _coordenadas;
   
 }
