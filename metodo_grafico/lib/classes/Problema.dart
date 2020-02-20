@@ -1,4 +1,4 @@
-import 'package:metodo_grafico/Funcion.dart';
+import 'file:///C:/Users/alexi/AndroidStudioProjects/metodo_grafico/lib/classes/Funcion.dart';
 
 class Problema {
   Funcion funcionObjetivo;

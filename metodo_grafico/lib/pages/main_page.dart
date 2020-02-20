@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'metodoGrafico.dart';
 
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
+import 'metodoGrafico.dart';
 
 class MainPage extends StatefulWidget
 {
@@ -19,15 +20,17 @@ class _MainPageState extends State<MainPage>
     (
       appBar: AppBar
       (
-        title: Text('I.O', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0))
+        elevation: 2.0,
+        backgroundColor: Colors.white,
+        title: Text('I.O.', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0)),
       ),
       body: StaggeredGridView.count(
         crossAxisCount: 2,
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         children: <Widget>[
-          _buildTile(
+          cards(
             Padding
             (
               padding: const EdgeInsets.all(24.0),
@@ -43,7 +46,7 @@ class _MainPageState extends State<MainPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>
                     [
-                     // Text('Método Gráfico', style: TextStyle(color: Colors.blueAccent)),
+                    //  Text('Total Views', style: TextStyle(color: Colors.blueAccent)),
                       Text('Método Gráfico', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 25.0))
                     ],
                   ),
@@ -63,11 +66,9 @@ class _MainPageState extends State<MainPage>
                 ]
               ),
             ),
-            onTap: () {
-              
-            },
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => metodoGrafico())),
           ),
-          _buildTile(
+          cards(
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column
@@ -93,7 +94,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-          _buildTile(
+          cards(
             Padding
             (
               padding: const EdgeInsets.all(24.0),
@@ -120,8 +121,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
           ),
-         
-          _buildTile(
+          cards(
             Padding
             (
               padding: const EdgeInsets.all(24.0),
@@ -157,9 +157,7 @@ class _MainPageState extends State<MainPage>
                 ]
               ),
             ),
-            onTap: () 
-               => Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyApp())),
-            
+       //     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ShopItemsPage())),
           )
         ],
         staggeredTiles: [
@@ -172,19 +170,16 @@ class _MainPageState extends State<MainPage>
     );
   }
 
-  Widget _buildTile(Widget child, {Function() onTap}) {
+  Widget cards(Widget child, {Function() onTap}) {
     return Material(
       elevation: 14.0,
       borderRadius: BorderRadius.circular(12.0),
       shadowColor: Color(0x802196F3),
       child: InkWell
       (
-        // Do onTap() if it isn't null, otherwise do print()
-      //  onTap:  onTap != null ? () => onTap() : () { print('Not set yet'); },
+        onTap: onTap != null ? () => onTap() : () { print('Not set yet'); },
         child: child
       )
     );
   }
-
- 
 }
