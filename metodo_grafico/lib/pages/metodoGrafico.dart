@@ -11,20 +11,9 @@ class _metodoGraficoState extends State < metodoGrafico > {
   var maxmin = " ≤ ";
   final _formKey = GlobalKey < FormState > ();
 
-  void _incrementCounter(BuildContext context) {
+  void _incrementCounter() {
     setState(() {
-      var count = data.length + 1;
-      if (data.length < 6){
-        data.add(count.toString());
-      }    
-      else{
-          Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text ('Solo puedes ingresar 6 restricciones')
-          )
-        );
-      }
-
+      data.add((data.length+1).toString());
     });
   }
 
@@ -189,13 +178,24 @@ class _metodoGraficoState extends State < metodoGrafico > {
               tooltip: 'Decrement',
               child: Icon(Icons.remove),
             ),
-            FloatingActionButton(
+            Builder(
+              builder: (context)=>FloatingActionButton(
               onPressed: (){
-                _incrementCounter(context);
+                if (data.length < 6){
+                  _incrementCounter();
+                }
+                else{
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Solo puedes agregar 6 restricciones'))
+                  );
+                }
               },
               heroTag: "xd",
               tooltip: 'Increment',
               child: Icon(Icons.add),
+            ),
+              
             ),
           ],
         ), 
