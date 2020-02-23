@@ -6,8 +6,9 @@ class metodoGrafico extends StatefulWidget {
 }
 
 class _metodoGraficoState extends State < metodoGrafico > {
-  int selectedRadio;
+  int selectedRadio= 0;
   var data = ['1'];
+  var maxmin = " ≤ ";
   final _formKey = GlobalKey < FormState > ();
 
   void _incrementCounter() {
@@ -28,6 +29,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
   setSelectedRadio(int val) {
     setState(() {
       selectedRadio = val;
+      if ( val == 0)
+        maxmin = " ≤ ";
+      else
+        maxmin = " ≥ ";
     });
   }
 
@@ -109,7 +114,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
                           fontSize: 18
                         ), ),
                         MyTextFormField(),
-                        Text(" ≥ ", style: TextStyle(
+                        Text(maxmin, style: TextStyle(
                           fontSize: 18
                         ), ),
                         MyTextFormField(),
