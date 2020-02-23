@@ -8,23 +8,25 @@ class metodoGrafico extends StatefulWidget
 
 class _metodoGraficoState extends State<metodoGrafico>
 {
-  int selectedRadio;
-  int selectedRadioTile;
-   @override
-   void initState() {
-    // TODO: implement initState
-    super.initState();
-    selectedRadio = 0;
-    selectedRadioTile=0;
+   int selectedRadio; 
+    var data = ['1'];
+
+   void _incrementCounter() {
+    setState(() {
+      var count = data.length + 1;
+      data.add(count.toString());
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      data.removeLast();
+    });
   }
 
 
+   @override
 
-   setSelectedRadioTile(int val){
-    setState(() {
-      selectedRadioTile = val;
-    });
- }
     setSelectedRadio(int val){
     setState(() {
       selectedRadio = val;
@@ -48,27 +50,15 @@ class _metodoGraficoState extends State<metodoGrafico>
         title: Text('Titulo', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
 
       ),
-body: Column(
-  mainAxisAlignment: MainAxisAlignment.start,
-  children: <Widget>[
-   /* RadioListTile(value: 1, groupValue: selectedRadioTile, title: Text("Maximizar"), subtitle: Text("Radio"),
-    onChanged: (val){
-setSelectedRadioTile(val);
-    },
-    selected: false,
-    ),
-      RadioListTile(value: 2, groupValue: selectedRadioTile, title: Text("Minimizar"), subtitle: Text("Radio"),
-    onChanged: (val){
-setSelectedRadioTile(val);
-    },
-    selected: false,
-    ),*/
-    
-    ButtonBar(
-      alignment: MainAxisAlignment.center,
-      children: <Widget>[
+body: SingleChildScrollView(child: 
+Column(
+  mainAxisAlignment: MainAxisAlignment.start, 
+    children: <Widget>[
+      ButtonBar(
+        alignment: MainAxisAlignment.center,
+        children: <Widget>[
         Text("Maximizar"),
-        Radio(value: 0, groupValue: selectedRadio, activeColor: Colors.green,onChanged: (val){
+        Radio(value: 0,groupValue: selectedRadio, activeColor: Colors.green,onChanged: (val){
           setSelectedRadio(val);
         },),
         Text("Minimizar "),
@@ -76,9 +66,63 @@ setSelectedRadioTile(val);
           setSelectedRadio(val);
         },)
       ],
-    ) 
-  ],
+    ) ,
+    Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ListView.builder(
+              itemCount: data.length,
+              padding: EdgeInsets.all(20.0),
+              shrinkWrap: true,
+              itemBuilder: (context, int index) {
+                return Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.topCenter,
+                        child: 
+                            Container(
+                              alignment: Alignment.topCenter,
+                              child:  TextField(
+                               keyboardType: TextInputType.phone,
+                             decoration: new InputDecoration(   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)), filled: true,),
+                    ),
+                            )  
+                      )
+                    ],
+                  ),  
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+     
+            
+],
 ),
+    ),
+ floatingActionButton:Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            FloatingActionButton(
+              onPressed: _decrementCounter,
+              heroTag: "dx",
+              tooltip: 'Decrement',
+              child: Icon(Icons.remove),
+            ),
+            FloatingActionButton(
+              onPressed: _incrementCounter,
+              heroTag: "xd",
+              tooltip: 'Increment',
+              child: Icon(Icons.add),
+            ),
+            
+          ],
+        )
+
     );
   }
 }
