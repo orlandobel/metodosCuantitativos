@@ -6,8 +6,7 @@ class metodoGrafico extends StatefulWidget
   _metodoGraficoState createState() => _metodoGraficoState();
 }
 
-class _metodoGraficoState extends State<metodoGrafico>
-{
+class _metodoGraficoState extends State<metodoGrafico>{
    int selectedRadio; 
     var data = ['1'];
 
@@ -33,11 +32,11 @@ class _metodoGraficoState extends State<metodoGrafico>
     });
   }
   @override
-  Widget build(BuildContext context)
-  {
-    return Scaffold
-    (
-      appBar: AppBar
+  Widget build(BuildContext context) {
+    final halfMediaWidth = MediaQuery.of(context).size.width / 2.0;
+     final _formKey = GlobalKey<FormState>();
+    return Scaffold(
+       appBar: AppBar
       (
         elevation: 0.0,
        // backgroundColor: Colors.transparent,
@@ -50,11 +49,11 @@ class _metodoGraficoState extends State<metodoGrafico>
         title: Text('Titulo', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
 
       ),
-body: SingleChildScrollView(child: 
-Column(
-  mainAxisAlignment: MainAxisAlignment.start, 
-    children: <Widget>[
-      ButtonBar(
+      body: Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          ButtonBar(
         alignment: MainAxisAlignment.center,
         children: <Widget>[
         Text("Maximizar"),
@@ -67,44 +66,59 @@ Column(
         },)
       ],
     ) ,
-    Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ListView.builder(
-              itemCount: data.length,
-              padding: EdgeInsets.all(20.0),
-              shrinkWrap: true,
-              itemBuilder: (context, int index) {
-                return Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topCenter,
-                        child: 
-                            Container(
-                              alignment: Alignment.topCenter,
-                              child:  TextField(
-                               keyboardType: TextInputType.phone,
-                             decoration: new InputDecoration(   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)), filled: true,),
-                    ),
-                            )  
-                      )
-                    ],
-                  ),  
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-     
+          Expanded(child: CustomScrollView(
+
+        slivers: <Widget>[
+          ///First sliver is the App Bar
+          
+          SliverList(
             
-],
-),
+            delegate: SliverChildBuilderDelegate(
+              
+              (BuildContext context, int index) {
+               
+                return  Container(
+            alignment: Alignment.topCenter,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.topCenter,
+                  width: halfMediaWidth,
+                  child: MyTextFormField(
+                    
+                    
+                  ),
+                ),
+                Text(" + "),
+                Container(
+                  alignment: Alignment.topCenter,
+                  width: halfMediaWidth,
+                  child: MyTextFormField(
+                    
+                    
+                    
+                  ),
+                )
+              ],
+            ),
+          );
+               
+              },
+              childCount: data.length,
+            ),
+          )
+        ],
+      ),),
+          
+          
+        
+
+         
+        ],
+      ),
     ),
- floatingActionButton:Row(
+       floatingActionButton:Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             FloatingActionButton(
@@ -122,9 +136,36 @@ Column(
             
           ],
         )
+    );
+  }
 
+  
+}
+
+class MyTextFormField extends StatelessWidget {
+  final String hintText;
+ 
+
+  MyTextFormField({
+    this.hintText,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          hintText: hintText,
+          contentPadding: EdgeInsets.all(15.0),
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey[200],
+        ),
+       
+        keyboardType: TextInputType.number
+      ),
     );
   }
 }
-
- 
