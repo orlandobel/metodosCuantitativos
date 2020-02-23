@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'main_page.dart';
 class metodoGrafico extends StatefulWidget {
   @override
   _metodoGraficoState createState() => _metodoGraficoState();
@@ -64,6 +64,38 @@ class _metodoGraficoState extends State < metodoGrafico > {
                 ],
               ),
             ),
+
+            SliverToBoxAdapter(
+              child: Text(" Función objetivo ", style: TextStyle(
+                          fontSize: 18
+                        ),textAlign: TextAlign.center, ),
+            ),
+            
+            SliverToBoxAdapter(
+              child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: < Widget > [
+                        MyTextFormField(),
+                        Text(" + ", style: TextStyle(
+                          fontSize: 18
+                        ), ),
+                        MyTextFormField(),
+                        Text(" = ", style: TextStyle(
+                          fontSize: 18
+                        ), ),
+                        MyTextFormField(),
+                      ],
+                    ),
+                  ),
+            ),
+
+            SliverToBoxAdapter(
+              child: Text(" Restricciones ", style: TextStyle(
+                          fontSize: 18
+                        ),textAlign: TextAlign.center, ),
+            ),
+
             SliverList(
 
               delegate: SliverChildBuilderDelegate(
@@ -77,6 +109,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
                           fontSize: 18
                         ), ),
                         MyTextFormField(),
+                        Text(" ≥ ", style: TextStyle(
+                          fontSize: 18
+                        ), ),
+                        MyTextFormField(),
                       ],
                     ),
                   );
@@ -86,9 +122,39 @@ class _metodoGraficoState extends State < metodoGrafico > {
               ),
               
             ),
+
+            SliverToBoxAdapter(
+              child: SizedBox(height: 10,),
+            ),
+
+            SliverToBoxAdapter(
+              child:  Padding(
+                padding: const EdgeInsets.only(
+                left: 50.0, right: 50.0, top: 10.0),
+                child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.blue,
+          child: MaterialButton(
+            onPressed: () {
+               Navigator.of(context).push(MaterialPageRoute(builder: (_) => MainPage()));
+            },
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            
+            child: Text("Ingresar",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+                ),
+          ),
+        ),
+                  ),
+            ),
+
             SliverToBoxAdapter(
               child: SizedBox(height: 80,),
-            )
+            ),
+
           ],
         ),
       ),
