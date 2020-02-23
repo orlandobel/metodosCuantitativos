@@ -39,7 +39,6 @@ class _metodoGraficoState extends State < metodoGrafico > {
         child: CustomScrollView(
 
           slivers: < Widget > [
-            ///First sliver is the App Bar
             SliverAppBar(
               elevation: 0.0,
               // backgroundColor: Colors.transparent,
@@ -49,7 +48,6 @@ class _metodoGraficoState extends State < metodoGrafico > {
                 icon: Icon(Icons.arrow_back, color: Colors.black),
               ),
               title: Text('Titulo', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
-
             ),
             SliverToBoxAdapter(
               child: ButtonBar(
@@ -86,6 +84,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
                 },
                 childCount: data.length,
               ),
+              
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 80,),
             )
           ],
         ),
