@@ -11,16 +11,27 @@ class _metodoGraficoState extends State < metodoGrafico > {
   var maxmin = " ≤ ";
   final _formKey = GlobalKey < FormState > ();
 
-  void _incrementCounter() {
+  void _incrementCounter(BuildContext context) {
     setState(() {
       var count = data.length + 1;
-      data.add(count.toString());
+      if (data.length < 6){
+        data.add(count.toString());
+      }    
+      else{
+          Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text ('Solo puedes ingresar 6 restricciones')
+          )
+        );
+      }
+
     });
   }
 
   void _decrementCounter() {
     setState(() {
-      data.removeLast();
+      if(data.length > 1  )
+         data.removeLast();
     });
   }
 
@@ -59,7 +70,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
                 alignment: MainAxisAlignment.center,
                 children: < Widget > [
                   Text("Maximizar"),
-                  Radio(value: 0, groupValue: selectedRadio, activeColor: Colors.green, onChanged: (val) {
+                  Radio(value: 0, groupValue: selectedRadio, activeColor: Colors.blue, onChanged: (val) {
                     setSelectedRadio(val);
                   }, ),
                   Text("Minimizar "),
@@ -109,11 +120,13 @@ class _metodoGraficoState extends State < metodoGrafico > {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: < Widget > [
-                        MyTextFormField(),
+                        MyTextFormField(
+                          hintText: "x1",
+                        ),
                         Text(" + ", style: TextStyle(
                           fontSize: 18
                         ), ),
-                        MyTextFormField(),
+                        MyTextFormField(hintText: "x2",),
                         Text(maxmin, style: TextStyle(
                           fontSize: 18
                         ), ),
@@ -177,7 +190,9 @@ class _metodoGraficoState extends State < metodoGrafico > {
               child: Icon(Icons.remove),
             ),
             FloatingActionButton(
-              onPressed: _incrementCounter,
+              onPressed: (){
+                _incrementCounter(context);
+              },
               heroTag: "xd",
               tooltip: 'Increment',
               child: Icon(Icons.add),
