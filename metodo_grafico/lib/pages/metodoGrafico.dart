@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:metodo_grafico/classes/Funcion.dart';
 import 'main_page.dart';
 class metodoGrafico extends StatefulWidget {
   @override
@@ -9,6 +11,11 @@ class _metodoGraficoState extends State < metodoGrafico > {
   int selectedRadio= 0;
   var data = ['1'];
   var maxmin = " ≤ ";
+  final objetivoUno =TextEditingController();
+  final objetivoDos =TextEditingController();
+  final objetivoIgual =TextEditingController();
+  var ouno, odos, oigual;
+  bool maxi;
   final _formKey = GlobalKey < FormState > ();
 
   void _incrementCounter() {
@@ -29,10 +36,13 @@ class _metodoGraficoState extends State < metodoGrafico > {
   setSelectedRadio(int val) {
     setState(() {
       selectedRadio = val;
-      if ( val == 0)
+      if ( val == 0){
         maxmin = " ≤ ";
-      else
+        maxi=true;
+      }else{
         maxmin = " ≥ ";
+        maxi=false;
+      }
     });
   }
 
@@ -81,15 +91,34 @@ class _metodoGraficoState extends State < metodoGrafico > {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: < Widget > [
-                        MyTextFormField(),
-                        Text(" + ", style: TextStyle(
+                        MyTextFormField(
+                          controller: objetivoUno,
+                          onChanged: (num){
+								 	        this.ouno= num;
+                          print(num);
+								          },
+                        ),
+                        Text(" U + ", style: TextStyle(
                           fontSize: 18
                         ), ),
-                        MyTextFormField(),
-                        Text(" = ", style: TextStyle(
+                        MyTextFormField(
+                          controller: objetivoDos,
+                          onChanged: (num){
+								 	        this.odos= num;
+                          print(num);
+								          },
+                        ),
+                        Text("U = ", style: TextStyle(
                           fontSize: 18
                         ), ),
-                        MyTextFormField(),
+                        MyTextFormField(
+                          controller: objetivoIgual,
+                          onChanged: (num){
+								 	        this.oigual= num;
+                          print(num);
+								          },
+                          
+                        ),
                       ],
                     ),
                   ),
@@ -110,7 +139,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: < Widget > [
                         MyTextFormField(
-                          hintText: "x1",
+                          hintText: "x1",///////////////////////////////////////////Nota para el HectorG
                         ),
                         Text(" + ", style: TextStyle(
                           fontSize: 18
@@ -144,12 +173,14 @@ class _metodoGraficoState extends State < metodoGrafico > {
           color: Colors.blue,
           child: MaterialButton(
             onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(builder: (_) => MainPage()));
+              print("entre");
+              submit();
+             //  Navigator.of(context).push(MaterialPageRoute(builder: (_) => MainPage()));
             },
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             
-            child: Text("Ingresar",
+            child: Text("Solucion",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
                 ),
@@ -203,16 +234,31 @@ class _metodoGraficoState extends State < metodoGrafico > {
     );
   }
 
-
+void submit(){
+  var aux =ouno.toString()+"x"+odos.toString()+"y"+"="+oigual.toString();
+  //List<num> restricciones;
+  print(aux);
+  //List li=data.toList();
+  //for(int i=0;li.length != null ;i++){
+   // restricciones[i]=int.parse(li.elementAt(i));
+  //}
+  //Funcion func = new Funcion(aux,maxi,li);
+  
+  //print(aux);
+  print(maxi);
+  //print(li.toString());  
+}
 }
 
 class MyTextFormField extends StatelessWidget {
   final String hintText;
 
-
   MyTextFormField({
-    this.hintText,
+    this.hintText, TextEditingController controller,  TextEditingController controller2,
+     TextEditingController controller3, Null Function(num) onChanged, Null Function(num) onChanged2,
+     Null Function(num) onChanged3
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -227,10 +273,14 @@ class MyTextFormField extends StatelessWidget {
             filled: true,
             fillColor: Colors.grey[200],
           ),
-
-          keyboardType: TextInputType.number
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+      WhitelistingTextInputFormatter.digitsOnly],
         ),
       )
     );
   }
+
+  
+
 }
