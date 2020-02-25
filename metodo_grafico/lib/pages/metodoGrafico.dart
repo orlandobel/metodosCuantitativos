@@ -11,19 +11,26 @@ class _metodoGraficoState extends State < metodoGrafico > {
   int selectedRadio= 0;
   var data = ['1'];
   var maxmin = " ≤ ";
-  final objetivoUno =TextEditingController();
-  final objetivoDos =TextEditingController();
-  final objetivoIgual =TextEditingController();
+
   var ouno, odos, oigual;
   bool maxi;
-  List<Widget> inputs;
-  List<List<Widget>> outputs;
+  List<MyTextFormField> formObjetivos =[MyTextFormField(),MyTextFormField(),MyTextFormField()];
+  List<Widget> objetivo;
+  List<List<MyTextFormField>> restricciones;
+  List<List<Widget>> w_restricciones;
+  
 
   final _formKey = GlobalKey < FormState > ();
 
   void _incrementCounter() {
     setState(() {
       data.add((data.length+1).toString());
+      restricciones.add([MyTextFormField(hintText: 'x1'),MyTextFormField(hintText: 'x2'),MyTextFormField()]);
+      w_restricciones.add([
+    restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+    restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+    restricciones[0][2].build(context)
+    ]);
     });
   }
 
@@ -31,6 +38,8 @@ class _metodoGraficoState extends State < metodoGrafico > {
     setState(() {
       if(data.length > 1  )
          data.removeLast();
+         restricciones.removeLast();
+         w_restricciones.removeLast();
     });
   }
 
@@ -51,6 +60,19 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
   @override
   Widget build(BuildContext context) {
+  objetivo=[formObjetivos[0].build(context),Text(" X1 + ", style: TextStyle(fontSize: 18), ),
+  formObjetivos[1].build(context),Text("X2 = ", style: TextStyle(fontSize: 18),),
+  formObjetivos[2].build(context)];
+  restricciones= [[MyTextFormField(hintText: 'x1'),MyTextFormField(hintText: 'x2'),MyTextFormField()]];
+  w_restricciones= [[
+    restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+    restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+    restricciones[0][2].build(context)
+    ]];
+  
+                                     
+
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -91,25 +113,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
             
             SliverToBoxAdapter(
               child: Container(
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: < Widget > [
-                        MyTextFormField(         
-                                       
-                        ),
-                        Text(" U + ", style: TextStyle(
-                          fontSize: 18
-                        ), ),
-                        MyTextFormField(
-                          
-                        ),
-                        Text("U = ", style: TextStyle(
-                          fontSize: 18
-                        ), ),
-                        MyTextFormField(
-                          
-                        ),
-                      ],
+                      children: objetivo,
                       
                     ),
                   ),
@@ -128,19 +135,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
                   return Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: < Widget > [
-                        MyTextFormField(
-                          hintText: "x1",///////////////////////////////////////////Nota para el HectorG
-                        ),
-                        Text(" + ", style: TextStyle(
-                          fontSize: 18
-                        ), ),
-                        MyTextFormField(hintText: "x2",),
-                        Text(maxmin, style: TextStyle(
-                          fontSize: 18
-                        ), ),
-                        MyTextFormField(),
-                      ],
+                      children: w_restricciones[0],
                     ),
                   );
 
@@ -225,25 +220,27 @@ class _metodoGraficoState extends State < metodoGrafico > {
     );
   }
 
-void submit(){
-  var aux =ouno.toString()+"x"+odos.toString()+"y"+"="+oigual.toString();
-  //List<num> restricciones;
-  print(aux);
-  //List li=data.toList();
-  //for(int i=0;li.length != null ;i++){
-   // restricciones[i]=int.parse(li.elementAt(i));
-  //}
-  //Funcion func = new Funcion(aux,maxi,li);
-  
-  //print(aux);
-  print(maxi);
-  //print(li.toString());  
-}
+  void submit(){
+    var aux = formObjetivos[0].valor+"x + "+formObjetivos[1].valor+"y = "+formObjetivos[2].valor;
+    print(aux);
+    //var aux =ouno.toString()+"x"+odos.toString()+"y"+"="+oigual.toString();
+    //List<num> restricciones;
+    //List li=data.toList();
+    //for(int i=0;li.length != null ;i++){
+    // restricciones[i]=int.parse(li.elementAt(i));
+    //}
+    //Funcion func = new Funcion(aux,maxi,li);
+    
+    //print(aux);
+    //print(maxi);
+    //print(li.toString());  
+  }
 }
 
 class MyTextFormField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller=TextEditingController();
+  String valor;
 
   MyTextFormField({
     this.hintText
@@ -256,8 +253,10 @@ class MyTextFormField extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: TextFormField(
-         // chinguen a su reputisima madre hijos de chopin .|.
          controller: controller,
+         onChanged: (num){
+           this.valor = num;
+         },
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: EdgeInsets.all(15.0),
