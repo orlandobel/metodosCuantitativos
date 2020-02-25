@@ -16,6 +16,9 @@ class _metodoGraficoState extends State < metodoGrafico > {
   final objetivoIgual =TextEditingController();
   var ouno, odos, oigual;
   bool maxi;
+  List<Widget> inputs;
+  List<List<Widget>> outputs;
+
   final _formKey = GlobalKey < FormState > ();
 
   void _incrementCounter() {
@@ -91,35 +94,23 @@ class _metodoGraficoState extends State < metodoGrafico > {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: < Widget > [
-                        MyTextFormField(
-                          controller: objetivoUno,
-                          onChanged: (num){
-								 	        this.ouno= num;
-                          print(num);
-								          },
+                        MyTextFormField(         
+                                       
                         ),
                         Text(" U + ", style: TextStyle(
                           fontSize: 18
                         ), ),
                         MyTextFormField(
-                          controller: objetivoDos,
-                          onChanged: (num){
-								 	        this.odos= num;
-                          print(num);
-								          },
+                          
                         ),
                         Text("U = ", style: TextStyle(
                           fontSize: 18
                         ), ),
                         MyTextFormField(
-                          controller: objetivoIgual,
-                          onChanged: (num){
-								 	        this.oigual= num;
-                          print(num);
-								          },
                           
                         ),
                       ],
+                      
                     ),
                   ),
             ),
@@ -252,11 +243,10 @@ void submit(){
 
 class MyTextFormField extends StatelessWidget {
   final String hintText;
+  final TextEditingController controller=TextEditingController();
 
   MyTextFormField({
-    this.hintText, TextEditingController controller,  TextEditingController controller2,
-     TextEditingController controller3, Null Function(num) onChanged, Null Function(num) onChanged2,
-     Null Function(num) onChanged3
+    this.hintText
   });
 
 
@@ -266,6 +256,8 @@ class MyTextFormField extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: TextFormField(
+         // chinguen a su reputisima madre hijos de chopin .|.
+         controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: EdgeInsets.all(15.0),
