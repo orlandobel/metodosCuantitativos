@@ -2,8 +2,9 @@ class Funcion {
   List<num> _variables;
   num _solucion;
   int _numVariables;
+  bool max;
 
-  Funcion(String funcion) {
+  Funcion(String funcion, bool op,List<num> lista) {
     _obtenerVariables();
   }
 
