@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget
       title: 'Dashboard',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: MainPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
