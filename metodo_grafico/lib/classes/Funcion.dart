@@ -1,7 +1,7 @@
 class Funcion {
-  List<num> _variables;
-  num _solucion;
-  int _numVariables;
+  num x;
+  num y;
+  num solucion;
 
   Funcion(String funcion) {
     _obtenerVariables();
@@ -15,6 +15,4 @@ class Funcion {
   calcularSolucion() {
 
   }
-
-  get solucion => _solucion;
 }
