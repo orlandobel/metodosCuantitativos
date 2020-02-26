@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:metodo_grafico/classes/Funcion.dart';
+import 'package:metodo_grafico/classes/Problema.dart';
 import 'main_page.dart';
+
 class metodoGrafico extends StatefulWidget {
   @override
   _metodoGraficoState createState() => _metodoGraficoState();
@@ -9,17 +11,15 @@ class metodoGrafico extends StatefulWidget {
 
 class _metodoGraficoState extends State < metodoGrafico > {
   int selectedRadio= 0;
-  var data = ['1'];
+  var data = ['2'];
   var maxmin = " ≤ ";
-
-  var ouno, odos, oigual;
   bool maxi;
+  
   List<MyTextFormField> formObjetivos =[MyTextFormField(),MyTextFormField(),MyTextFormField()];
   List<Widget> objetivo;
   List<List<MyTextFormField>> restricciones;
   List<List<Widget>> w_restricciones;
   
-
   final _formKey = GlobalKey < FormState > ();
 
   void _incrementCounter() {
@@ -36,13 +36,12 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
   void _decrementCounter() {
     setState(() {
-      if(data.length > 1  )
+      if(data.length > 2  )
          data.removeLast();
          restricciones.removeLast();
          w_restricciones.removeLast();
     });
   }
-
 
   @override
   setSelectedRadio(int val) {
@@ -70,9 +69,6 @@ class _metodoGraficoState extends State < metodoGrafico > {
     restricciones[0][2].build(context)
     ]];
   
-                                     
-
-
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -221,19 +217,34 @@ class _metodoGraficoState extends State < metodoGrafico > {
   }
 
   void submit(){
-    var aux = formObjetivos[0].valor+"x + "+formObjetivos[1].valor+"y = "+formObjetivos[2].valor;
-    print(aux);
+    var funObj = formObjetivos[0].valor+"x + "+formObjetivos[1].valor+"y = "+formObjetivos[2].valor;//Funcion objetivo
+    Funcion funcion=new Funcion(funObj);
+    var numRestri=data.length;//Numero de restricciones
+    
+    if(selectedRadio==0)
+      maxi = true;//Operacion de maximizar
+    else  
+      maxi = false; //Operacion de minimizar
+    
+    List<Funcion> fun;
+
+    for(int i=0;i<data.length;i++){
+      var aux=restricciones[0][i].valor;
+      fun[i]=new Funcion(aux);
+    }
+    print(funObj);
+    print(numRestri);
+    print(fun.toString());
+    print(maxi);
+
+    Problema prob = new Problema(funcion, numRestri,fun,maxi);
+   
+    //restricciones[0][0]
+    //primer corchete -> numero de restricciones
+    // segundo corchete- > 0->x1,1->x2,2->igual
     //var aux =ouno.toString()+"x"+odos.toString()+"y"+"="+oigual.toString();
     //List<num> restricciones;
-    //List li=data.toList();
-    //for(int i=0;li.length != null ;i++){
-    // restricciones[i]=int.parse(li.elementAt(i));
-    //}
-    //Funcion func = new Funcion(aux,maxi,li);
-    
-    //print(aux);
-    //print(maxi);
-    //print(li.toString());  
+
   }
 }
 
