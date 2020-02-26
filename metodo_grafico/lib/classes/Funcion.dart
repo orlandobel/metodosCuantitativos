@@ -1,7 +1,7 @@
 class Funcion {
-  num x;
-  num y;
-  num solucion;
+  List<num> x;
+  List<num> y;
+  List<num> solucion;
 
   Funcion(String funcion) {
     _obtenerVariables();

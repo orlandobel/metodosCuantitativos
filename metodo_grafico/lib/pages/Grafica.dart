@@ -1,12 +1,14 @@
 /// Line chart example
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:metodo_grafico/classes/Funcion.dart';
+
 
 class Grafica extends StatefulWidget {
   final List<charts.Series> seriesList;
   final bool animate;
 
-  Grafica(this.seriesList, {this.animate});
+  Grafica(this.seriesList, {this.animate, List<Funcion> funciones});
 
   factory Grafica.withSampleData() {
     return new Grafica(_createSampleData(), animate: false);
@@ -81,15 +83,18 @@ class _GraficaState extends State<Grafica> {
       _sol = selectedDatum.first.datum.solucion;
       _measures = measures;
     });
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {
+    var _screenHeight = MediaQuery.of(context).size.height;
+    var _height = _screenHeight*0.85;
+
     final children = <Widget>[
       Padding(
         padding: EdgeInsets.only(top: 25),
         child: new SizedBox(
-          height: 700.0,
+          height: _height,
           child: new charts.LineChart(
             widget.seriesList,
             animate: widget.animate,
@@ -139,53 +144,3 @@ class PuntoSolucion {
 
   PuntoSolucion(this.x, this.y, {this.solucion});
 }
-
-/*static List<charts.Series<PuntosSolucion, num>> _createSampleData() {
-    final restriccion1 = [
-      new PuntosSolucion(0, 18),
-      new PuntosSolucion(4, 5),
-      new PuntosSolucion(5, 3),
-      new PuntosSolucion(6, 0),
-    ];
-
-    final restriccion2 = [
-      new PuntosSolucion(0, 8),
-      new PuntosSolucion(2, 6),
-      new PuntosSolucion(5, 3),
-      new PuntosSolucion(8, 0),
-    ];
-
-    final restriccion3 = [
-      new PuntosSolucion(0, 7),
-      new PuntosSolucion(2, 6),
-      new PuntosSolucion(4, 5),
-      new PuntosSolucion(14, 0),
-    ];
-
-    return [
-      new charts.Series<PuntosSolucion, num>(
-        id: 'Restriccion 1',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (PuntosSolucion punto, _) => punto.x,
-        measureFn: (PuntosSolucion punto, _) => punto.y,
-        data: restriccion1,
-      ),
-      
-      new charts.Series<PuntosSolucion, num>(
-        id: 'Restriccion 1',
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (PuntosSolucion punto, _) => punto.x,
-        measureFn: (PuntosSolucion punto, _) => punto.y,
-        data: restriccion2)..setAttribute(charts.rendererIdKey, 'customPoint'
-      ),
-
-      new charts.Series<PuntosSolucion, num>(
-        id: 'Restriccion 1',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (PuntosSolucion punto, _) => punto.x,
-        measureFn: (PuntosSolucion punto, _) => punto.y,
-        data: restriccion3,
-      ),
-    ];
-  }
-*/
