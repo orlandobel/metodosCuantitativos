@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:metodo_grafico/classes/Funcion.dart';
-import 'package:metodo_grafico/classes/MyTextFormField.dart';
-import 'package:metodo_grafico/classes/Problema.dart';
+//import 'package:metodo_grafico/classes/Funcion.dart';
+import 'package:metodo_grafico/classes/myTextFormField.dart';
+//import 'package:metodo_grafico/classes/Problema.dart';
 
 class metodoGrafico extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
   var data = ['1','2'];
   var maxmin = " ≤ ";
   bool maxi=true;
+  bool aviseLimSuperior = false;
   List<List<TextEditingController>> controladores = List<List<TextEditingController>>();
   List<MyTextFormField> funObjetivo =List<MyTextFormField>();
   List<List<MyTextFormField>> restricciones=List<List<MyTextFormField>>();
@@ -90,11 +91,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
   void _decrementCounter() {
     setState(() {
-      if(data.length > 2  )
-         data.removeLast();
-         controladores.removeLast();
-         restricciones.removeLast();
-         wRestricciones.removeLast();
+        data.removeLast();
+        controladores.removeLast();
+        restricciones.removeLast();
+        wRestricciones.removeLast();
     });
   }
 
@@ -124,11 +124,11 @@ class _metodoGraficoState extends State < metodoGrafico > {
               elevation: 0.0,
               // backgroundColor: Colors.transparent,
               leading: IconButton(
-                color: Colors.black,
+                color: Colors.white,
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: Icon(Icons.arrow_back, color: Colors.white),
               ),
-              title: Text('Titulo', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
+              title: Text('Método Grafico', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
             ),
             SliverToBoxAdapter(
               child: ButtonBar(
@@ -231,28 +231,38 @@ class _metodoGraficoState extends State < metodoGrafico > {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: < Widget > [
             FloatingActionButton(
-              onPressed: _decrementCounter,
-              heroTag: "dx",
+              heroTag: "menos",
               tooltip: 'Decrement',
               child: Icon(Icons.remove),
+              onPressed: (){
+                if (data.length > 2){
+                  _decrementCounter();
+                  aviseLimSuperior=false;
+                }
+              },
+
             ),
             Builder(
-              
               builder: (context)=>FloatingActionButton(
+                heroTag: "mas",
+                tooltip: 'Increment',
+                child: Icon(Icons.add),
               onPressed: (){
                 if (data.length < 6){
                   _incrementCounter();
                 }
                 else{
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Solo puedes agregar 6 restricciones'))
-                  );
+                  if (!aviseLimSuperior){
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Solo puedes agregar 6 restricciones'))
+                    );
+                    aviseLimSuperior = true;
+                  }
+
                 }
               },
-              heroTag: "xd",
-              tooltip: 'Increment',
-              child: Icon(Icons.add),
+
             ),
               
             ),
