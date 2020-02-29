@@ -11,25 +11,25 @@ class metodoGrafico extends StatefulWidget {
 
 class _metodoGraficoState extends State < metodoGrafico > {
   int selectedRadio= 0;
-  var data = ['2'];
+  var data = ['1','2'];
   var maxmin = " ≤ ";
   bool maxi;
-  
-  List<MyTextFormField> formObjetivos =[MyTextFormField(),MyTextFormField(),MyTextFormField()];
+  List<List<TextEditingController>> controladores = [[TextEditingController(),TextEditingController(),TextEditingController()]];
+  List<MyTextFormField> formObjetivos =[new MyTextFormField(controladores[0][1]),new MyTextFormField(), new MyTextFormField()];
   List<Widget> objetivo;
   List<List<MyTextFormField>> restricciones;
-  List<List<Widget>> w_restricciones;
+  List<List<Widget>> wRestricciones;
   
   final _formKey = GlobalKey < FormState > ();
 
   void _incrementCounter() {
     setState(() {
       data.add((data.length+1).toString());
-      restricciones.add([MyTextFormField(hintText: 'x1'),MyTextFormField(hintText: 'x2'),MyTextFormField()]);
-      w_restricciones.add([
-    restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
-    restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
-    restricciones[0][2].build(context)
+      restricciones.add([new MyTextFormField(hintText: 'x1'),new MyTextFormField(hintText: 'x2'),new MyTextFormField()]);
+      wRestricciones.add([
+        restricciones[restricciones.length-1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+        restricciones[restricciones.length-1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+        restricciones[restricciones.length-1][2].build(context)
     ]);
     });
   }
@@ -39,7 +39,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
       if(data.length > 2  )
          data.removeLast();
          restricciones.removeLast();
-         w_restricciones.removeLast();
+         wRestricciones.removeLast();
     });
   }
 
@@ -62,8 +62,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
   objetivo=[formObjetivos[0].build(context),Text(" X1 + ", style: TextStyle(fontSize: 18), ),
   formObjetivos[1].build(context),Text("X2 = ", style: TextStyle(fontSize: 18),),
   formObjetivos[2].build(context)];
+
   restricciones= [[MyTextFormField(hintText: 'x1'),MyTextFormField(hintText: 'x2'),MyTextFormField()]];
-  w_restricciones= [[
+
+  wRestricciones= [[
     restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
     restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
     restricciones[0][2].build(context)
@@ -112,7 +114,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: objetivo,
+                      children: formObjetivos,
                       
                     ),
                   ),
@@ -131,12 +133,12 @@ class _metodoGraficoState extends State < metodoGrafico > {
                   return Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: w_restricciones[0],
+                      children: wRestricciones[index],
                     ),
                   );
 
                 },
-                childCount: data.length,
+                childCount: wRestricciones.length,
               ),
               
             ),
@@ -250,10 +252,10 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
 class MyTextFormField extends StatelessWidget {
   final String hintText;
-  final TextEditingController controller=TextEditingController();
+  final TextEditingController controller;
   String valor;
 
-  MyTextFormField({
+  MyTextFormField(this.controller, {
     this.hintText
   });
 
