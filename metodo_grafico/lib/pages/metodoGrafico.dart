@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:metodo_grafico/classes/Funcion.dart';
+import 'package:metodo_grafico/classes/MyTextFormField.dart';
 import 'package:metodo_grafico/classes/Problema.dart';
 
 class metodoGrafico extends StatefulWidget {
@@ -9,34 +9,82 @@ class metodoGrafico extends StatefulWidget {
 }
 
 class _metodoGraficoState extends State < metodoGrafico > {
+
   int selectedRadio= 0;
   var data = ['1','2'];
   var maxmin = " ≤ ";
-  bool maxi;
-  List<List<TextEditingController>> controladores = [[TextEditingController(),TextEditingController(),TextEditingController()]];
-  List<MyTextFormField> formObjetivos=List<MyTextFormField>();/* =[new MyTextFormField(controladores[0][1]),new MyTextFormField(), new MyTextFormField()];*/
-  List<Widget> objetivo=List<Widget>();
+  bool maxi=true;
+  List<List<TextEditingController>> controladores = List<List<TextEditingController>>();
+  List<MyTextFormField> funObjetivo =List<MyTextFormField>();
   List<List<MyTextFormField>> restricciones=List<List<MyTextFormField>>();
+  List<Widget> wObjetivo=List<Widget>();
   List<List<Widget>> wRestricciones=List<List<Widget>>();
   
   static final _formKey = GlobalKey < FormState > ();
+  _metodoGraficoState(){
+    controladores =
+    [
+      [TextEditingController(),TextEditingController(),TextEditingController()],
+      [TextEditingController(),TextEditingController(),TextEditingController()],
+      [TextEditingController(),TextEditingController(),TextEditingController()]
+    ];
+    funObjetivo= 
+    [
+      MyTextFormField(controladores[0][0]),MyTextFormField(controladores[0][1]),MyTextFormField(controladores[0][2])
+    ];
+    wObjetivo=[
+      funObjetivo[0].build(context),Text(" X1 + ", style: TextStyle(fontSize: 18), ),
+      funObjetivo[1].build(context),Text("X2 = ", style: TextStyle(fontSize: 18),),
+      funObjetivo[2].build(context)
+    ];
+  restricciones= [
+      [
+        MyTextFormField(controladores[1][0]),
+        MyTextFormField(controladores[1][1]),
+        MyTextFormField(controladores[1][2])
+      ],
+      [
+        MyTextFormField(controladores[2][0]),
+        MyTextFormField(controladores[2][1]),
+        MyTextFormField(controladores[2][2])
+      ]
+    ];
+  
 
+  wRestricciones= [
+    [
+      restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+      restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+      restricciones[0][2].build(context)
+    ],
+    [
+      restricciones[1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+      restricciones[1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+      restricciones[1][2].build(context)
+    ]
+    ];
+
+    }
 
   void _incrementCounter() {
     setState(() {
       controladores.add([
-    TextEditingController(),TextEditingController(),TextEditingController()
-  ]);
+        TextEditingController(),TextEditingController(),TextEditingController()
+      ]);
       data.add((data.length+1).toString());
       restricciones.add(
-        [new MyTextFormField(controladores[controladores.length-1][0]),
-      new MyTextFormField(controladores[controladores.length-1][1]),
-      new MyTextFormField(controladores[controladores.length-1][2])]);
-      wRestricciones.add([
-        restricciones[restricciones.length-1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
-        restricciones[restricciones.length-1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
-        restricciones[restricciones.length-1][2].build(context)
-    ]);
+        [
+          new MyTextFormField(controladores[controladores.length-1][0]),
+          new MyTextFormField(controladores[controladores.length-1][1]),
+          new MyTextFormField(controladores[controladores.length-1][2])
+        ]
+      );
+      wRestricciones.add(
+        [
+          restricciones[restricciones.length-1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+          restricciones[restricciones.length-1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+          restricciones[restricciones.length-1][2].build(context)
+        ]);
     });
   }
 
@@ -63,49 +111,9 @@ class _metodoGraficoState extends State < metodoGrafico > {
       }
     });
   }
-
+ 
   @override
   Widget build(BuildContext context) {
-  formObjetivos.add(MyTextFormField(controladores[0][0]));
-  formObjetivos.add(MyTextFormField(controladores[0][1]));
-  formObjetivos.add(MyTextFormField(controladores[0][2]));
-  
-  objetivo=[formObjetivos[0].build(context),Text(" X1 + ", style: TextStyle(fontSize: 18), ),
-  
-  formObjetivos[1].build(context),Text("X2 = ", style: TextStyle(fontSize: 18),),
-  formObjetivos[2].build(context)];
-  //formObjetivos =[new MyTextFormField(controladores[0][0]),new MyTextFormField(controladores[0][1]), new MyTextFormField(controladores[0][2])];
-  controladores.add([
-    TextEditingController(),TextEditingController(),TextEditingController()
-  ]);
-  controladores.add([
-    TextEditingController(),TextEditingController(),TextEditingController()
-  ]);
-
-  restricciones= [
-    [
-    MyTextFormField(controladores[1][0]),
-    MyTextFormField(controladores[1][1]),
-    MyTextFormField(controladores[1][2])
-    ],
-    [
-    MyTextFormField(controladores[2][0]),
-    MyTextFormField(controladores[2][1]),
-    MyTextFormField(controladores[2][2])
-    ]
-    ];
-  
-
-  wRestricciones= [[
-    restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
-    restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
-    restricciones[0][2].build(context)
-    ],[
-    restricciones[1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
-    restricciones[1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
-    restricciones[1][2].build(context)
-    ]];
-  
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -139,7 +147,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
             ),
 
             SliverToBoxAdapter(
-              child: Text(" Función objetivo ", style: TextStyle(
+              child: Text(" Función wObjetivo ", style: TextStyle(
                           fontSize: 18
                         ),textAlign: TextAlign.center, ),
             ),
@@ -149,7 +157,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: formObjetivos,
+                      children: wObjetivo,
                       
                     ),
                   ),
@@ -255,7 +263,8 @@ class _metodoGraficoState extends State < metodoGrafico > {
   }
 
   void submit(){
-    var funObj = formObjetivos[0].valor+"x + "+formObjetivos[1].valor+"y = "+formObjetivos[2].valor;//Funcion objetivo
+    /*
+    //var funObj = formwObjetivos[0].valor+"x + "+formwObjetivos[1].valor+"y = "+formwObjetivos[2].valor;//Funcion wObjetivo
     Funcion funcion=new Funcion(funObj);
     var numRestri=data.length;//Numero de restricciones
     
@@ -282,45 +291,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
     // segundo corchete- > 0->x1,1->x2,2->igual
     //var aux =ouno.toString()+"x"+odos.toString()+"y"+"="+oigual.toString();
     //List<num> restricciones;
-
+*/
   }
 }
 
-class MyTextFormField extends StatelessWidget {
-  final String hintText;
-  final TextEditingController controller;
-  String valor;
-
-  MyTextFormField(this.controller, {
-    this.hintText
-  });
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: TextFormField(
-         controller: controller,
-         onChanged: (num){
-           this.valor = num;
-         },
-          decoration: InputDecoration(
-            hintText: hintText,
-            contentPadding: EdgeInsets.all(15.0),
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Colors.grey[200],
-          ),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-      WhitelistingTextInputFormatter.digitsOnly],
-        ),
-      )
-    );
-  }
-
-  
-
-}

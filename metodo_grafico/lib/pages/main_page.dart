@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:metodo_grafico/classes/Controladores.dart';
 
 import 'metodoGrafico.dart';
 
@@ -16,6 +16,7 @@ class _MainPageState extends State<MainPage>
   @override
   Widget build(BuildContext context)
   {
+    Controladores controladores = Controladores();
     return Scaffold
     (
       appBar: AppBar
@@ -66,7 +67,12 @@ class _MainPageState extends State<MainPage>
                 ]
               ),
             ),
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => metodoGrafico())),
+            onTap: (){
+              final route = MaterialPageRoute(
+                builder: (context) => metodoGrafico()
+              );
+              Navigator.push(context, route);
+            },
           ),
           cards(
             Padding(
