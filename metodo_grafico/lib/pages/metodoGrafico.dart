@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:metodo_grafico/classes/Funcion.dart';
 import 'package:metodo_grafico/classes/Problema.dart';
-import 'main_page.dart';
 
 class metodoGrafico extends StatefulWidget {
   @override
@@ -15,17 +14,24 @@ class _metodoGraficoState extends State < metodoGrafico > {
   var maxmin = " ≤ ";
   bool maxi;
   List<List<TextEditingController>> controladores = [[TextEditingController(),TextEditingController(),TextEditingController()]];
-  List<MyTextFormField> formObjetivos =[new MyTextFormField(controladores[0][1]),new MyTextFormField(), new MyTextFormField()];
-  List<Widget> objetivo;
-  List<List<MyTextFormField>> restricciones;
-  List<List<Widget>> wRestricciones;
+  List<MyTextFormField> formObjetivos=List<MyTextFormField>();/* =[new MyTextFormField(controladores[0][1]),new MyTextFormField(), new MyTextFormField()];*/
+  List<Widget> objetivo=List<Widget>();
+  List<List<MyTextFormField>> restricciones=List<List<MyTextFormField>>();
+  List<List<Widget>> wRestricciones=List<List<Widget>>();
   
-  final _formKey = GlobalKey < FormState > ();
+  static final _formKey = GlobalKey < FormState > ();
+
 
   void _incrementCounter() {
     setState(() {
+      controladores.add([
+    TextEditingController(),TextEditingController(),TextEditingController()
+  ]);
       data.add((data.length+1).toString());
-      restricciones.add([new MyTextFormField(hintText: 'x1'),new MyTextFormField(hintText: 'x2'),new MyTextFormField()]);
+      restricciones.add(
+        [new MyTextFormField(controladores[controladores.length-1][0]),
+      new MyTextFormField(controladores[controladores.length-1][1]),
+      new MyTextFormField(controladores[controladores.length-1][2])]);
       wRestricciones.add([
         restricciones[restricciones.length-1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
         restricciones[restricciones.length-1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
@@ -38,6 +44,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
     setState(() {
       if(data.length > 2  )
          data.removeLast();
+         controladores.removeLast();
          restricciones.removeLast();
          wRestricciones.removeLast();
     });
@@ -59,16 +66,44 @@ class _metodoGraficoState extends State < metodoGrafico > {
 
   @override
   Widget build(BuildContext context) {
+  formObjetivos.add(MyTextFormField(controladores[0][0]));
+  formObjetivos.add(MyTextFormField(controladores[0][1]));
+  formObjetivos.add(MyTextFormField(controladores[0][2]));
+  
   objetivo=[formObjetivos[0].build(context),Text(" X1 + ", style: TextStyle(fontSize: 18), ),
+  
   formObjetivos[1].build(context),Text("X2 = ", style: TextStyle(fontSize: 18),),
   formObjetivos[2].build(context)];
+  //formObjetivos =[new MyTextFormField(controladores[0][0]),new MyTextFormField(controladores[0][1]), new MyTextFormField(controladores[0][2])];
+  controladores.add([
+    TextEditingController(),TextEditingController(),TextEditingController()
+  ]);
+  controladores.add([
+    TextEditingController(),TextEditingController(),TextEditingController()
+  ]);
 
-  restricciones= [[MyTextFormField(hintText: 'x1'),MyTextFormField(hintText: 'x2'),MyTextFormField()]];
+  restricciones= [
+    [
+    MyTextFormField(controladores[1][0]),
+    MyTextFormField(controladores[1][1]),
+    MyTextFormField(controladores[1][2])
+    ],
+    [
+    MyTextFormField(controladores[2][0]),
+    MyTextFormField(controladores[2][1]),
+    MyTextFormField(controladores[2][2])
+    ]
+    ];
+  
 
   wRestricciones= [[
     restricciones[0][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
     restricciones[0][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
     restricciones[0][2].build(context)
+    ],[
+    restricciones[1][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+    restricciones[1][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+    restricciones[1][2].build(context)
     ]];
   
     return Scaffold(
@@ -127,7 +162,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
             ),
 
             SliverList(
-
+              
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return Container(
@@ -194,6 +229,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
               child: Icon(Icons.remove),
             ),
             Builder(
+              
               builder: (context)=>FloatingActionButton(
               onPressed: (){
                 if (data.length < 6){
