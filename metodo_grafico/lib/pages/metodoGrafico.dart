@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:metodo_grafico/classes/Funcion.dart';
+import 'package:metodo_grafico/classes/Problema.dart';
 //import 'package:metodo_grafico/classes/Funcion.dart';
 import 'package:metodo_grafico/classes/myTextFormField.dart';
 //import 'package:metodo_grafico/classes/Problema.dart';
@@ -25,18 +27,17 @@ class _metodoGraficoState extends State < metodoGrafico > {
   _metodoGraficoState(){
     controladores =
     [
-      [TextEditingController(),TextEditingController(),TextEditingController()],
+      [TextEditingController(),TextEditingController()],
       [TextEditingController(),TextEditingController(),TextEditingController()],
       [TextEditingController(),TextEditingController(),TextEditingController()]
     ];
     funObjetivo= 
     [
-      MyTextFormField(controladores[0][0]),MyTextFormField(controladores[0][1]),MyTextFormField(controladores[0][2])
+      MyTextFormField(controladores[0][0]),MyTextFormField(controladores[0][1])
     ];
     wObjetivo=[
       funObjetivo[0].build(context),Text(" X1 + ", style: TextStyle(fontSize: 18), ),
-      funObjetivo[1].build(context),Text("X2 = ", style: TextStyle(fontSize: 18),),
-      funObjetivo[2].build(context)
+      funObjetivo[1].build(context),Text("X2 ", style: TextStyle(fontSize: 18),)
     ];
   restricciones= [
       [
@@ -99,17 +100,31 @@ class _metodoGraficoState extends State < metodoGrafico > {
   }
 
   @override
-  setSelectedRadio(int val) {
+  setSelectedRadio(int i) {
+    selectedRadio=i;
+    print (i);
+    if ( i == 0) {
+      maxmin = " ≤ ";
+      maxi = true;
+    }
+    else {
+      maxmin = " ≥ ";
+      maxi = false;
+    }
     setState(() {
-      selectedRadio = val;
-      if ( val == 0){
-        maxmin = " ≤ ";
-        maxi=true;
-      }else{
-        maxmin = " ≥ ";
-        maxi=false;
+      for (var i in wRestricciones) {
+
+        i = [
+          restricciones[restricciones.length - 1][0].build(context),
+          Text(" + ", style: TextStyle(fontSize: 18),),
+          restricciones[restricciones.length - 1][1].build(context),
+          Text(maxmin, style: TextStyle(fontSize: 18),),
+          restricciones[restricciones.length - 1][2].build(context)
+        ];
+        print('corregir');
       }
     });
+
   }
  
   @override
@@ -135,19 +150,19 @@ class _metodoGraficoState extends State < metodoGrafico > {
                 alignment: MainAxisAlignment.center,
                 children: < Widget > [
                   Text("Maximizar"),
-                  Radio(value: 0, groupValue: selectedRadio, activeColor: Colors.blue, onChanged: (val) {
-                    setSelectedRadio(val);
+                  Radio(value: 0, groupValue: selectedRadio, activeColor: Colors.blue, onChanged: (int) {
+                    setSelectedRadio(int);
                   }, ),
                   Text("Minimizar "),
-                  Radio(value: 1, groupValue: selectedRadio, activeColor: Colors.blue, onChanged: (val) {
-                    setSelectedRadio(val);
+                  Radio(value: 1, groupValue: selectedRadio, activeColor: Colors.blue, onChanged: (int) {
+                    setSelectedRadio(int);
                   }, )
                 ],
               ),
             ),
 
             SliverToBoxAdapter(
-              child: Text(" Función wObjetivo ", style: TextStyle(
+              child: Text(" Función Objetivo ", style: TextStyle(
                           fontSize: 18
                         ),textAlign: TextAlign.center, ),
             ),
@@ -200,7 +215,6 @@ class _metodoGraficoState extends State < metodoGrafico > {
           color: Colors.blue,
           child: MaterialButton(
             onPressed: () {
-              print("entre");
               submit();
              //  Navigator.of(context).push(MaterialPageRoute(builder: (_) => MainPage()));
             },
@@ -273,35 +287,18 @@ class _metodoGraficoState extends State < metodoGrafico > {
   }
 
   void submit(){
-    /*
-    //var funObj = formwObjetivos[0].valor+"x + "+formwObjetivos[1].valor+"y = "+formwObjetivos[2].valor;//Funcion wObjetivo
+    String funObj = funObjetivo[0].controller.text+"*x + "+
+        funObjetivo[1].controller.text+"*y = 0";
     Funcion funcion=new Funcion(funObj);
-    var numRestri=data.length;//Numero de restricciones
-    
-    if(selectedRadio==0)
-      maxi = true;//Operacion de maximizar
-    else  
-      maxi = false; //Operacion de minimizar
-    
-    List<Funcion> fun;
-
-    for(int i=0;i<data.length;i++){
-      var aux=restricciones[0][i].valor;
-      fun[i]=new Funcion(aux);
+    List<Funcion> restriccionesFinales = new List<Funcion>();
+    for (var i in restricciones){
+        String r = i[0].controller.text+"*x + "+i[1].controller.text+"*y = "+i[2].controller.text;
+        print(r);
+        restriccionesFinales.add(Funcion(r));
     }
-    print(funObj);
-    print(numRestri);
-    print(fun.toString());
-    print(maxi);
+    Problema problema = new Problema(funcion,data.length,restriccionesFinales,maxi);
+    print('Termine');
 
-    Problema prob = new Problema(funcion, numRestri,fun,maxi);
-   
-    //restricciones[0][0]
-    //primer corchete -> numero de restricciones
-    // segundo corchete- > 0->x1,1->x2,2->igual
-    //var aux =ouno.toString()+"x"+odos.toString()+"y"+"="+oigual.toString();
-    //List<num> restricciones;
-*/
   }
 }
 
