@@ -112,17 +112,15 @@ class _metodoGraficoState extends State < metodoGrafico > {
       maxi = false;
     }
     setState(() {
-      for (var i in wRestricciones) {
-
-        i = [
-          restricciones[restricciones.length - 1][0].build(context),
-          Text(" + ", style: TextStyle(fontSize: 18),),
-          restricciones[restricciones.length - 1][1].build(context),
-          Text(maxmin, style: TextStyle(fontSize: 18),),
-          restricciones[restricciones.length - 1][2].build(context)
-        ];
-        print('corregir');
+      wRestricciones.clear();
+      for(int i=0; i<restricciones.length;i++){
+        wRestricciones.add([
+          restricciones[i][0].build(context),Text(" + ", style: TextStyle( fontSize: 18),),
+          restricciones[i][1].build(context),Text(maxmin, style: TextStyle(fontSize: 18), ),
+          restricciones[i][2].build(context)
+        ]);
       }
+
     });
 
   }
