@@ -12,11 +12,7 @@ class Problema {
     _numRestricciones = res;
     _restricciones = fr;
     max=op;
-  }
-
-  // Se iterará para despejar las restricciones
-  void calcularRestricciones() {
-
+    print("Ya llegue");
   }
 
   // Para cada restricción busara los pares ordenados según las soluciones

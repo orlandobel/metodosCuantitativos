@@ -285,14 +285,23 @@ class _metodoGraficoState extends State < metodoGrafico > {
   }
 
   void submit(){
-    String funObj = funObjetivo[0].controller.text+"*x + "+
-        funObjetivo[1].controller.text+"*y = 0";
-    Funcion funcion=new Funcion(funObj);
+    List<double> funObj=new List<double>();
+    funObj.add(double.parse(funObjetivo[0].controller.text));
+    funObj.add(double.parse(funObjetivo[1].controller.text));
+    
+    /*String funObj = funObjetivo[0].controller.text+"*x + "+
+        funObjetivo[1].controller.text+"*y";*/
+    Funcion funcion=new Funcion(funObj, true);
+   
     List<Funcion> restriccionesFinales = new List<Funcion>();
     for (var i in restricciones){
-        String r = i[0].controller.text+"*x + "+i[1].controller.text+"*y = "+i[2].controller.text;
-        print(r);
-        restriccionesFinales.add(Funcion(r));
+        funObj.clear();
+        funObj.add(double.parse(i[0].controller.text));
+        funObj.add(double.parse(i[1].controller.text));
+        funObj.add(double.parse(i[2].controller.text));
+        /*String r = i[0].controller.text+"*x + "+i[1].controller.text+"*y - "+i[2].controller.text;
+        print(r);*/
+        restriccionesFinales.add(Funcion(funObj,false));
     }
     Problema problema = new Problema(funcion,data.length,restriccionesFinales,maxi);
     print('Termine');
