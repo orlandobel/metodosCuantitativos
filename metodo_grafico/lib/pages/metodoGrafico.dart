@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metodo_grafico/classes/Funcion.dart';
 import 'package:metodo_grafico/classes/Problema.dart';
-//import 'package:metodo_grafico/classes/Funcion.dart';
 import 'package:metodo_grafico/classes/myTextFormField.dart';
-//import 'package:metodo_grafico/classes/Problema.dart';
 
 class metodoGrafico extends StatefulWidget {
   @override
@@ -214,7 +212,6 @@ class _metodoGraficoState extends State < metodoGrafico > {
           child: MaterialButton(
             onPressed: () {
               submit();
-             //  Navigator.of(context).push(MaterialPageRoute(builder: (_) => MainPage()));
             },
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -288,9 +285,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
     List<double> funObj=new List<double>();
     funObj.add(double.parse(funObjetivo[0].controller.text));
     funObj.add(double.parse(funObjetivo[1].controller.text));
-    
-    /*String funObj = funObjetivo[0].controller.text+"*x + "+
-        funObjetivo[1].controller.text+"*y";*/
+
     Funcion funcion=new Funcion(funObj, true);
    
     List<Funcion> restriccionesFinales = new List<Funcion>();
@@ -299,8 +294,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
         funObj.add(double.parse(i[0].controller.text));
         funObj.add(double.parse(i[1].controller.text));
         funObj.add(double.parse(i[2].controller.text));
-        /*String r = i[0].controller.text+"*x + "+i[1].controller.text+"*y - "+i[2].controller.text;
-        print(r);*/
+
         restriccionesFinales.add(Funcion(funObj,false));
     }
     Problema problema = new Problema(funcion,data.length,restriccionesFinales,maxi);

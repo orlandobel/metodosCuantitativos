@@ -1,27 +1,29 @@
-import 'dart:ffi';
-import 'dart:math' as math;
 import 'package:math_expressions/math_expressions.dart';
 
 class Funcion {
   List<num> x;
   List<num> y;
   List<num> solucion;
+  Number m,b;
   Expression exp;
-
+  Variable equis;
   Funcion(List<double> funcion, bool fo) {
+    x=new List<num>();
+    y=new List<num>();
+    equis = new Variable('x');
+    m= new Number(-funcion[0]/funcion[1]);
     if(fo){
-    Variable x = new Variable('x') /*y = new Variable('y')*/;
-    Number a = new Number(funcion[0]);
-    Number b = new Number(funcion[1]);
-     exp=(-a/b)*x;
-    
+      b = new Number(0);
     }else{
-    Variable x = new Variable('x') /*y = new Variable('y')*/;
-    Number a = new Number(funcion[0]);
-    Number b = new Number(funcion[1]);
-    Number c = new Number(funcion[2]);
-     exp=(c-(a*x))/b;
+      b= new Number(funcion[2]/funcion[1]);
     }
+    exp=m*equis+b;
+
+    //exp=(c-(a*x))/b;
+    
+    //exp.evaluate(EvaluationType.REAL, context);
+    
+
     
   }
 
