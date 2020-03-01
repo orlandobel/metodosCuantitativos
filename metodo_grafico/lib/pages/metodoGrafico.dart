@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:metodo_grafico/classes/Funcion.dart';
 import 'package:metodo_grafico/classes/Problema.dart';
 import 'package:metodo_grafico/classes/myTextFormField.dart';
+import 'package:metodo_grafico/pages/Grafica.dart';
 
 class metodoGrafico extends StatefulWidget {
   @override
@@ -298,8 +299,13 @@ class _metodoGraficoState extends State < metodoGrafico > {
         restriccionesFinales.add(Funcion(funObj,false));
     }
     Problema problema = new Problema(funcion,data.length,restriccionesFinales,maxi);
-    print('Termine');
+    /*
 
+    final route = MaterialPageRoute(
+        builder: (context) => Grafica(problema.restricciones)
+    );
+    Navigator.push(context, route);
+*/
   }
 }
 
