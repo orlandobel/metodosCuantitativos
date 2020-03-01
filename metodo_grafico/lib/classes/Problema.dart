@@ -22,21 +22,23 @@ class Problema {
   // Guardar cada par ordenado en las listas 'x' 'y' de las funciones de restricción
   void buscarIntersecciones(){
     for(int i =0;i<_restricciones.length-1;i++){
-      double dividendo=_restricciones[i+1].b.getConstantValue()-_restricciones[i].b.getConstantValue();
-      double divisor= _restricciones[i].m.getConstantValue()-_restricciones[i+1].m.getConstantValue();
-      
-      Number aux= new Number(dividendo/divisor);
+      for(int j=i+1;j<_restricciones.length;j++){
+        double dividendo=_restricciones[j].b.getConstantValue()-_restricciones[i].b.getConstantValue();
+        double divisor= _restricciones[i].m.getConstantValue()-_restricciones[j].m.getConstantValue();
+        
+        Number aux= new Number(dividendo/divisor);
 
-      ContextModel cm = new ContextModel();
-      cm.bindVariable(_restricciones[i].equis, aux);
+        ContextModel cm = new ContextModel();
+        cm.bindVariable(_restricciones[i].equis, aux);
 
-      double s=_restricciones[i].exp.evaluate(EvaluationType.REAL, cm);
+        double s=_restricciones[i].exp.evaluate(EvaluationType.REAL, cm);
 
-      _restricciones[i].x.add(aux.getConstantValue());
-      _restricciones[i].y.add(s);
-      
-  
-      
+        _restricciones[i].x.add(aux.getConstantValue());
+        _restricciones[i].y.add(s);
+        
+        _restricciones[j].x.add(aux.getConstantValue());
+        _restricciones[j].y.add(s);
+      }
       //Pantalla_de_espera_mientras_voy_a_mear.destroy;
       }
   }
