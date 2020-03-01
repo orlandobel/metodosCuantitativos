@@ -299,13 +299,13 @@ class _metodoGraficoState extends State < metodoGrafico > {
         restriccionesFinales.add(Funcion(funObj,false));
     }
     Problema problema = new Problema(funcion,data.length,restriccionesFinales,maxi);
-    /*
+    
 
     final route = MaterialPageRoute(
         builder: (context) => Grafica(problema.restricciones)
     );
     Navigator.push(context, route);
-*/
+
   }
 }
 

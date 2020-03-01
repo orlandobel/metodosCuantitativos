@@ -5,73 +5,51 @@ import 'package:metodo_grafico/classes/Funcion.dart';
 
 
 class Grafica extends StatefulWidget {
-  final List<charts.Series> seriesList;
+  final List<charts.Series> seriesList = List<charts.Series<PuntoSolucion, num>>();
   final bool animate;
 
-  Grafica(this.seriesList, {this.animate, List<Funcion> funciones});
+  Grafica(List<Funcion> funciones, {this.animate}) {
+    // ontador de restricciones para el id de cada restricción
+    int cont = 1;
 
-  factory Grafica.withSampleData() {
-    return new Grafica(_createSampleData(), animate: false);
+    // Cremos las series que se graficarán
+    for(var f in funciones) {
+      // Lista que se usara para la creación de las series
+      List<PuntoSolucion> restriccion = List<PuntoSolucion>();
+      for(int i=0;i<f.x.length;i++) {
+        // Extracción de las cordenadas y soluciones de cada funión de restrdicción
+        num x = f.x[i];
+        num y = f.y[i];
+        num s = f.solucion[i];
+
+        // Creamos los puntos para las series
+        PuntoSolucion p = PuntoSolucion(x, y, solucion: s);
+
+        // Añadimos los puntos a las series
+        restriccion.add(p);
+      }
+
+      // Añadimos las series a las gráficas
+      seriesList.add(
+        // Creación de las series
+        charts.Series<PuntoSolucion, num>(
+          id: 'Restriccion ${cont}',
+          domainFn: (PuntoSolucion sales, _) => sales.x, // Establece el eje x
+          measureFn: (PuntoSolucion sales, _) => sales.y, // Establece el eje y
+          data: restriccion, // Establece el arreblo restricción como el arreglo de datos para la serie
+        )
+      );
+
+      cont++;
+    }
   }
 
   @override
   State<StatefulWidget> createState() => new _GraficaState();
-
-  static List<charts.Series<PuntoSolucion, num>> _createSampleData() {
-    // Puntos solución de la restricción 1 de ejemplo
-    final restriccion1 = [
-      new PuntoSolucion(0, 18),
-      new PuntoSolucion(4, 5, solucion: 35),
-      new PuntoSolucion(5, 3, solucion: 34),
-      new PuntoSolucion(6, 0, solucion: 30),
-    ];
-
-    // Puntos solución de la restricción 2 de ejemplo
-    final restriccion2 = [
-      new PuntoSolucion(0, 8),
-      new PuntoSolucion(2, 6, solucion: 28),
-      new PuntoSolucion(5, 3, solucion: 34),
-      new PuntoSolucion(8, 0),
-    ];
-    
-    // Puntos solución de la restricción 2 de ejemplo
-    final restriccion3 = [
-      new PuntoSolucion(0, 7, solucion: 21),
-      new PuntoSolucion(2, 6, solucion: 28),
-      new PuntoSolucion(4, 5, solucion: 35),
-      new PuntoSolucion(14, 0),
-    ];
-
-    return [
-      // Linea o penidente de la restricción 1 generada por sus puntos
-      new charts.Series<PuntoSolucion, num>(
-        id: 'Restriccion 1',
-        domainFn: (PuntoSolucion sales, _) => sales.x, // Establese el eje X
-        measureFn: (PuntoSolucion sales, _) => sales.y, // Establece el eje y
-        data: restriccion1, // Establece el arreblo restricción 1 como el arreglo de datos para la linea
-      ),
-
-      // Linea o penidente de la restricción 2 generada por sus puntos
-      new charts.Series<PuntoSolucion, num>(
-        id: 'Restriccion 2',
-        domainFn: (PuntoSolucion sales, _) => sales.x, // Establece el eje x
-        measureFn: (PuntoSolucion sales, _) => sales.y, // Establece el eje y
-        data: restriccion2, // Establece el arreblo restricción 2 como el arreglo de datos para la linea
-      ),
-
-      // Linea o penidente de la restricción 2 generada por sus puntos
-      new charts.Series<PuntoSolucion, num>(
-        id: 'Restriccion 3',
-        domainFn: (PuntoSolucion punto, _) => punto.x, // Establece el eje x
-        measureFn: (PuntoSolucion punto, _) => punto.y, // Establece el eje y
-        //domainLowerBoundFn: (PuntoSolucion punto, _) => punto.solucion,
-        data: restriccion3 // Establece el arreblo restricción 2 como el arreglo de datos para la linea
-      )
-    ];
-  }
 }
 
 class _GraficaState extends State<Grafica> {
+  // variables para la selección de puntos y su respectiva impresion de coordenadas y solución
   num _sol;
   Map<num, num> _measures;
 
@@ -79,24 +57,22 @@ class _GraficaState extends State<Grafica> {
   _onSelectionChanged(charts.SelectionModel model) {
     // Datos del punto
     final selectedDatum = model.selectedDatum;
-
-    // Guardarmos el valor de la coordeada x del punto
-    num x;
+    
     final measures = <num, num>{};
 
     if (selectedDatum.isNotEmpty) {
-      // Obtenemos y almacenamos para la imprecion el valor de la coordenada x del punto
-      x = selectedDatum.first.datum.x;
+      // Extraemos el par ordenado seleccionado
+        charts.SeriesDatum dtm = selectedDatum[0];
 
-      // Obetnemos la coordenada y del punto
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
-        measures[datumPair.datum.x] = datumPair.datum.y;
-      });
+        // Obtenemos los valores del par ordena
+        measures[dtm.datum.x] = dtm.datum.y;
     }
 
-    // Obtenemos el valor de la solución del punto
+    
     setState(() {
+      // Obtenemos el valor de la solución del punto para imprimir
       _sol = selectedDatum.first.datum.solucion;
+      // Almacenamos las coordenadas para imprimirlas
       _measures = measures;
     });
   } 
