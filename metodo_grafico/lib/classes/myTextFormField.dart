@@ -27,7 +27,9 @@ class MyTextFormField extends StatelessWidget {
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
-      WhitelistingTextInputFormatter.digitsOnly],
+            LengthLimitingTextInputFormatter(4),
+            BlacklistingTextInputFormatter(RegExp('[ -,-]')),
+          ],
         ),
       )
     );
