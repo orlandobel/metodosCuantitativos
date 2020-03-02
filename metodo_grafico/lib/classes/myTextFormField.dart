@@ -18,12 +18,15 @@ class MyTextFormField extends StatelessWidget {
          onChanged: (num){
            print(num);
          },
+         
           decoration: InputDecoration(
             hintText: hintText,
             contentPadding: EdgeInsets.all(15.0),
-            border: InputBorder.none,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             filled: true,
-            fillColor: Colors.grey[200],
+            
+                 focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(450, 107, 23, 64))),
+           fillColor: Colors.white,
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[

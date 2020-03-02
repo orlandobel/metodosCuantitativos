@@ -103,13 +103,15 @@ class _GraficaState extends State<Grafica> {
             ),*/
     );
     final children = <Widget>[
-      Padding(
+      Card(
+        child: Padding(
         padding: EdgeInsets.only(top: 25),
         child: new SizedBox(
           height: _height,
           child: lineChart,
         ),
       ),
+      )
     ];
 
     // Imprimimos la solución del punto
@@ -131,7 +133,14 @@ class _GraficaState extends State<Grafica> {
     });
 
     return Scaffold(
-      body: Column(children: children),
+      appBar: AppBar(
+        // elevation: 2.0,
+        //backgroundColor: Colors.white,
+        title: Text('Solución',),
+      ),
+      body: SingleChildScrollView(
+        child: Column(children: children),
+        ),
     );
   }
 }

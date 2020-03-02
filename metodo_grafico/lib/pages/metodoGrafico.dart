@@ -127,6 +127,23 @@ class _metodoGraficoState extends State < metodoGrafico > {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    endDrawer: Drawer(
+        
+        child: ListView(
+          children: <Widget>[
+              DrawerHeader(
+                decoration: new BoxDecoration(
+             image: DecorationImage(image: AssetImage('assets/ic_launcher.png'), fit: BoxFit.fill,
+        ) ,
+                ),
+               
+              ),
+
+              
+           
+          ],
+          ),
+      ),
       body: Form(
         key: _formKey,
         child: CustomScrollView(

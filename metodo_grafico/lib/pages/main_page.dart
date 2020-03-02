@@ -19,8 +19,36 @@ class _MainPageState extends State<MainPage>
       appBar: AppBar
       (
         elevation: 2.0,
-        backgroundColor: Colors.white,
-        title: Text('I.O.', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0)),
+       // backgroundColor: Colors.white,
+        title: Text('Investigación de operaciones', ),
+      ),
+         drawer:  Drawer(
+        
+        child: ListView(
+          children: <Widget>[
+              DrawerHeader(
+                decoration: new BoxDecoration(
+             image: DecorationImage(image: AssetImage('assets/ic_launcher.png'), fit: BoxFit.fill,
+        ) ,
+                ),
+               
+              ),
+
+              ListTile(
+                title: Text('Método grafico'),
+                leading: Icon(Icons.graphic_eq,),
+                onTap: (){
+               final route = MaterialPageRoute(
+                builder: (context) => metodoGrafico()
+              );
+              Navigator.push(context, route);
+                }
+                               
+                 
+              ),
+           
+          ],
+          ),
       ),
       body: StaggeredGridView.count(
         crossAxisCount: 2,
@@ -71,7 +99,7 @@ class _MainPageState extends State<MainPage>
               Navigator.push(context, route);
             },
           ),
-          cards(
+         /* cards(
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column
@@ -96,8 +124,8 @@ class _MainPageState extends State<MainPage>
                 ]
               ),
             ),
-          ),
-          cards(
+          ), */
+         /* cards(
             Padding
             (
               padding: const EdgeInsets.all(24.0),
@@ -123,8 +151,8 @@ class _MainPageState extends State<MainPage>
                 ]
               ),
             ),
-          ),
-          cards(
+          ),*/
+         /* cards(
             Padding
             (
               padding: const EdgeInsets.all(24.0),
@@ -161,7 +189,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
        //     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ShopItemsPage())),
-          )
+          )*/
         ],
         staggeredTiles: [
           StaggeredTile.extent(2, 110.0),
