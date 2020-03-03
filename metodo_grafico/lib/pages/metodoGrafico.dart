@@ -132,6 +132,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
         child: ListView(
           children: <Widget>[
               DrawerHeader(
+                child: Container(),
                 decoration: new BoxDecoration(
              image: DecorationImage(image: AssetImage('assets/ic_launcher.png'), fit: BoxFit.fill,
         ) ,
@@ -302,6 +303,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
   void submit(){
     List<double> funObj=new List<double>();
     funObj.add(double.parse(funObjetivo[0].controller.text));
+    funObj.add(double.parse(funObjetivo[1].controller.text));
     funObj.add(double.parse(funObjetivo[1].controller.text));
 
     Funcion funcion=new Funcion(funObj, true);

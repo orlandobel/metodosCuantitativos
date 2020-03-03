@@ -3,27 +3,30 @@ import 'package:math_expressions/math_expressions.dart';
 class Funcion {
   List<num> x,y,solucion;
   Number m,b;
-  Expression exp,inverso;
-  Variable equis,ie;
- 
+  Variable vX,vY;
+  Expression expOriginal,expInverso,expDespejada;
+  double limite;
+
   Funcion(List<double> funcion, bool fo) {
     x=new List<num>();
     y=new List<num>();
     solucion=new List<num>();
-    equis = new Variable('x');
+    vX = new Variable('x');
+    vY=new Variable('y');
     m=new Number(-funcion[0]/funcion[1]);
-    if(fo){
-      b = new Number(0);
-      Number aux1=new Number(funcion[0]);
-      Number aux2=new Number(funcion[1]);
-      ie=new Variable('y');
-      exp=(aux1*equis)+(aux2*ie);
-    }else{
-      b= new Number(funcion[2]/funcion[1]);
-      exp=m*equis+b;
-      inverso=(equis-b)/m;
+    Number aux1=new Number(funcion[0]);
+    Number aux2=new Number(funcion[1]);
+    expOriginal=(aux1*vX)+(aux2*vY);
+    limite=0;
+    if(fo) b = new Number(0);
+    else {
+      b = new Number(funcion[2] / funcion[1]);
+      limite = funcion[2];
     }
-  
+    expInverso=(vX-b)/m;
+    expDespejada=m*vX+b;
+    }
+
   }
 
-}
+

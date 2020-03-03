@@ -27,6 +27,7 @@ class _MainPageState extends State<MainPage>
         child: ListView(
           children: <Widget>[
               DrawerHeader(
+                child: Container(),
                 decoration: new BoxDecoration(
              image: DecorationImage(image: AssetImage('assets/ic_launcher.png'), fit: BoxFit.fill,
         ) ,
