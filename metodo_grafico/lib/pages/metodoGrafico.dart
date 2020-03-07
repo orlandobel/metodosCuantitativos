@@ -321,7 +321,7 @@ class _metodoGraficoState extends State < metodoGrafico > {
     
 
     final route = MaterialPageRoute(
-        builder: (context) => Grafica(problema.restricciones)
+        builder: (context) => Grafica(problema.restricciones,problema.solucionFinal)
     );
     Navigator.push(context, route);
 

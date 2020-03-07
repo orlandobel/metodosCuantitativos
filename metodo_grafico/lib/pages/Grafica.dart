@@ -6,8 +6,9 @@ import 'package:metodo_grafico/classes/Funcion.dart';
 class Grafica extends StatefulWidget {
   List<charts.Series> seriesList = List<charts.Series<PuntoSolucion, num>>();
   final bool animate;
+  List<double> solucionFinal;
 
-  Grafica(List<Funcion> funciones, {this.animate}) {
+  Grafica(List<Funcion> funciones, this.solucionFinal, {this.animate}) {
     // ontador de restricciones para el id de cada restricción
     int cont = 1;
 
@@ -44,15 +45,18 @@ class Grafica extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => new _GraficaState();
+  State<StatefulWidget> createState() => new _GraficaState(solucionFinal);
 }
 
 class _GraficaState extends State<Grafica> {
   // variables para la selección de puntos y su respectiva impresion de coordenadas y solución
   num _sol;
   Map<num, num> _measures;
+  List<double> solucionFinal;
   Widget lineChart = Text("Cargando...");
   var render;
+
+  _GraficaState(this.solucionFinal);
 
   // Este método se manda a llamar cada que seleccionamos un punto en la grafica
   _onSelectionChanged(charts.SelectionModel model) {
@@ -85,7 +89,7 @@ class _GraficaState extends State<Grafica> {
   @override
   Widget build(BuildContext context) {
     var _screenHeight = MediaQuery.of(context).size.height;
-    var _height = _screenHeight * 0.85;
+    var _height = _screenHeight * 0.70;
 
     lineChart = charts.LineChart(
       widget.seriesList,
@@ -103,22 +107,36 @@ class _GraficaState extends State<Grafica> {
             ),*/
     );
     final children = <Widget>[
+      Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Solción: ${solucionFinal[2]}",
+                style: TextStyle(fontSize: 22),
+              ),
+              Text(
+                "(${solucionFinal[0]},${solucionFinal[1]})",
+                style: TextStyle(fontSize: 22),
+              ),
+            ],
+          )),
       Card(
         child: Padding(
-        padding: EdgeInsets.only(top: 25),
-        child: new SizedBox(
-          height: _height,
-          child: lineChart,
+          padding: EdgeInsets.only(top: 5),
+          child: new SizedBox(
+            height: _height,
+            child: lineChart,
+          ),
         ),
-      ),
       )
     ];
 
     // Imprimimos la solución del punto
     if (_sol != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text(
+      children.add(Padding(
+          padding: EdgeInsets.only(top: 5.0),
+          child: Text(
             "Solución: " + _sol.toStringAsFixed(2),
             style: TextStyle(fontSize: 22),
           )));
@@ -126,7 +144,7 @@ class _GraficaState extends State<Grafica> {
 
     // Imprimimos el par ordenado
     _measures?.forEach((num series, num value) {
-      children.add(new Text(
+      children.add(Text(
         '(${series.toStringAsFixed(2)},${value.toStringAsFixed(2)})',
         style: TextStyle(fontSize: 22),
       ));
@@ -136,11 +154,13 @@ class _GraficaState extends State<Grafica> {
       appBar: AppBar(
         // elevation: 2.0,
         //backgroundColor: Colors.white,
-        title: Text('Solución',),
+        title: Text(
+          'Solución',
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(children: children),
-        ),
+      ),
     );
   }
 }
